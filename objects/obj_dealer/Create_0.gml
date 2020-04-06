@@ -2,6 +2,10 @@
 // You can write your code in this editor
 
 global.num_cards = 24; //total size of deck
+global.their_score = 0;
+global.my_score = 0;
+
+
 
 //create ds_list objects to hold references to the cards
 global.deck = ds_list_create();
@@ -25,10 +29,21 @@ global.state = global.state_deal_cards;
 card_timer = 0;
 before_they_select_timer = 20;
 wait_timer = 0;
+reshuffle_timer = 0;
+
+opponent_chosen_index = 0;
+my_chosen_index = 1;
+
+reshuffled = false;
+
+
 
 //create a number of cards and add them to the global 'deck' list
 var rock_counter = 0;
 var scissor_counter = 0;
+//run loop 4 times 6 iterations each? dont want to have more than 2 of each type of card; 
+//divide group of 6 into 2 and that would be each player's hand (3)
+//specify how many rounds to play? (4)
 for (i=0; i< global.num_cards; i++){
 	//create a new card and store it in a temporary variable
 	var newcard = instance_create_layer(40, 150,"Instances", obj_card);
