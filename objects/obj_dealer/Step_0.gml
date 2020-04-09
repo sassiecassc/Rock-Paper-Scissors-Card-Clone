@@ -112,7 +112,8 @@ switch(global.state){
 					//we clicked a card and it's in my_hand
 					card_clicked.target_x = 260;
 					card_clicked.target_y = 195;;
-					
+				} else { //IF THE CARD WASNT CLICKED
+					//WE BOUT TO DO THE HOVERING EFFECT
 					global.state = global.state_wait_for_evaluate;
 					wait_timer = 40;
 				}
