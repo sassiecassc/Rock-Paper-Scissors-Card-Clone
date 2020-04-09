@@ -26,6 +26,7 @@ global.state_reshuffle = 5;
 global.state = global.state_deal_cards;
 
 //timer variables
+faceup_timer = 0;
 card_timer = 0;
 before_they_select_timer = 20;
 wait_timer = 0;

@@ -60,6 +60,7 @@ switch(global.state){
 						topcard.target_y = 300;
 						
 						//flip my hand cards up
+						//ADD TIMER HERE SO IT DOESN'T FACE UP RIGHT AWAY
 						topcard.face_up = true;
 					}
 				}
@@ -79,6 +80,7 @@ switch(global.state){
 			var random_index = choose(0, 1, 2);
 			//get the item that's actually at that index
 			var chosen_card = ds_list_find_value(global.their_hand, random_index);
+			//global.their_hand[| random_index];
 			opponent_chosen_index = random_index;
 			//moving chosen card to center to play
 			chosen_card.target_x = 200;
@@ -116,6 +118,7 @@ switch(global.state){
 			wait_timer -= 1;
 		}
 		if (wait_timer <= 0){
+			//flip opponent's card up
 			var their_card = ds_list_find_value(global.their_hand, opponent_chosen_index);
 			their_card.face_up = true;
 			
@@ -204,8 +207,9 @@ switch(global.state){
 				
 						//move the sprite to the table
 						their_card.target_x = 510;
-						their_card.target_y = 150;
+						their_card.target_y = 150 - 2*ds_list_size(global.discard_pile);;
 						their_card.face_up = false;
+						their_card.depth = -1000-ds_list_size(global.discard_pile);
 					
 				} else if(ds_list_size(global.my_hand) == 3){ //if my hand has 3 cards then remove my chosen card from my_hand list to discard list
 					var my_card = ds_list_find_value(global.my_hand, my_chosen_index);
@@ -218,10 +222,11 @@ switch(global.state){
 				
 					//move the sprite to the table
 					my_card.target_x = 510;
-					my_card.target_y = 145;
+					my_card.target_y = 150 - 2*ds_list_size(global.discard_pile);;
 					my_card.face_up = false;
+					my_card.depth = -1000-ds_list_size(global.discard_pile);
+					
 				} else if(ds_list_size(global.their_hand) > 0){ //move the rest of the opponent's cards to discard pile
-					show_debug_message("moving opponent card");
 					var their_card = ds_list_find_value(global.their_hand, 0);
 					//this won't delete the card object from the game
 					//it just deletes it from the deck
@@ -233,8 +238,9 @@ switch(global.state){
 				
 					//move the sprite to the table
 					their_card.target_x = 510;
-					their_card.target_y = 140;
+					their_card.target_y = 150 - 2*ds_list_size(global.discard_pile);;
 					their_card.face_up = false;
+					their_card.depth = -1000-ds_list_size(global.discard_pile);
 				} else if(ds_list_size(global.my_hand) > 0){ //move the rest of the my cards to discard pile
 					show_debug_message("moving my card");
 					var my_card = ds_list_find_value(global.my_hand, 0);
@@ -248,7 +254,8 @@ switch(global.state){
 				
 					//move the sprite to the table
 					my_card.target_x = 510;
-					my_card.target_y = 135;
+					my_card.target_y = 150 - 2*ds_list_size(global.discard_pile);
+					my_card.depth = -1000-ds_list_size(global.discard_pile);
 					my_card.face_up = false;
 				} else {
 					if(ds_list_size(global.deck) > 0){
