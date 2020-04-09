@@ -98,27 +98,95 @@ switch(global.state){
 	
 		break;
 	case global.state_my_select:
+	//did the player click the mouse button
+	//if the player clicked the mouse button then
+	//check to see if they clicked on a card
+	//if they clicked on a card then
+	//bring it up and play that card
+	//if they did not click the mouse button then
+	//check to see if they are colliding with a card
+	//if they are colliding with a card then
+	//do the hover effect and lerp a bit up
+	//check to see if player is over card
 	//CANT SELECT BEFORE THE OPPONENT SELECTS
+	
+		//check to see if the cards are at the normal y position
+		for (i=0; i<ds_list_size(global.my_hand); i++){
+			var thiscard = global.my_hand[| i];
+			thiscard.target_y = 280; 
+		}
+	
+	
+		var mouse_over_card = instance_position(mouse_x, mouse_y, obj_card);
+		//there is collision with mouse and card
+		if (mouse_over_card != noone){
+			//then hover effect
+			var hover_card = mouse_over_card;
+			//shoudl this be == noone or != noone
+			if (hover_card != noone){ //if player is hovering over a card
+				if (hover_card.face_up == true){ //and if the card is face up
+					hover_card.target_y = 270; //then lerp up a bit
+				}
+			} 
+		} // else here???
+		if (mouse_check_button_pressed(mb_left)){
+				//see if the mouse is on top of a card
+				var card_clicked = instance_position(mouse_x, mouse_y, obj_card);
+				//if the mouse is colliding with a card
+				if (card_clicked != noone){
+					//if the card I clicked on in my_hand list
+					var in_hand = ds_list_find_index(global.my_hand, card_clicked); //will be -1 if not found
+					if (in_hand >= 0){	
+						//reference to the index i chose
+						my_chosen_index = in_hand;
+						//we clicked a card and it's in my_hand
+						card_clicked.target_x = 260;
+						card_clicked.target_y = 195;
+					}
+				} 
+				global.state = global.state_wait_for_evaluate;
+				wait_timer = 40;
+			}
+				
+		
+	
+		/*
 		//see if the player clicked the mouse button
 		if (mouse_check_button_pressed(mb_left)){
 			//see if the mouse is on top of a card
 			var card_clicked = instance_position(mouse_x, mouse_y, obj_card);
+			//if the mouse is colliding with a card
 			if (card_clicked != noone){
-				//is the card I clicked in my_hand list?
+				//if the card I clicked on in my_hand list
 				var in_hand = ds_list_find_index(global.my_hand, card_clicked); //will be -1 if not found
 				if (in_hand >= 0){	
 					//reference to the index i chose
 					my_chosen_index = in_hand;
 					//we clicked a card and it's in my_hand
 					card_clicked.target_x = 260;
-					card_clicked.target_y = 195;;
-				} else { //IF THE CARD WASNT CLICKED
-					//WE BOUT TO DO THE HOVERING EFFECT
-					global.state = global.state_wait_for_evaluate;
-					wait_timer = 40;
+					card_clicked.target_y = 195;
 				}
+			} 
+		} else { //IF THE CARD WASNT CLICKED ; mouse check button
+			//check to see if player is over card
+			var card_clicked = instance_position(mouse_x, mouse_y, obj_card);
+			//there is collision with mouse and card
+			if (card_clicked != noone){
+				//then hover effect
+				var hover_card = instance_position(mouse_x, mouse_y, obj_card);
+				//shoudl this be == noone or != noone
+				if (hover_card != noone){ //if player is hovering over a card
+					if (hover_card.face_up == true){ //and if the card is face up
+						hover_card.target_y = 270; //then lerp up a bit
+					}
+				} 
+			} else {
+				global.state = global.state_wait_for_evaluate;
+				wait_timer = 40;
 			}
 		}
+		*/
+		
 		break;
 	case global.state_wait_for_evaluate:
 		if (wait_timer > 0){
@@ -132,9 +200,6 @@ switch(global.state){
 			
 			global.state = global.state_evaluate; 
 		}
-
-
-
 
 		break;
 	case global.state_evaluate:
