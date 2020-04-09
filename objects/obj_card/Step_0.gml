@@ -21,6 +21,6 @@ else {
 
 //move 10% of the way to the target x and y, every frame
 //creates a smooth move
-x = lerp(x, target_x, 0.25);
-y = lerp(y, target_y, 0.25);
+x = lerp(x, target_x, 0.15);
+y = lerp(y, target_y, 0.15);
 

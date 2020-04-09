@@ -37,8 +37,8 @@ switch(global.state){
 						ds_list_add(global.their_hand, topcard);
 				
 						//move the sprite to the table
-						topcard.target_x = 90 + 54 * ds_list_size(global.their_hand); //90 pix from the left side of screen; 44 pixels apart
-						topcard.target_y = 50;
+						topcard.target_x = 120 + 70 * ds_list_size(global.their_hand); //90 pix from the left side of screen; 44 pixels apart
+						topcard.target_y = 30;
 					}
 				} else if(ds_list_size(global.my_hand) < 3){
 					if (ds_list_size(global.deck) > 0) {
@@ -56,12 +56,18 @@ switch(global.state){
 						ds_list_add(global.my_hand, topcard);
 				
 						//move the sprite to the table
-						topcard.target_x = 90 + 54 * ds_list_size(global.my_hand); //90 pix from the left side of screen; 44 pixels apart
-						topcard.target_y = 300;
+						topcard.target_x = 120 + 70 * ds_list_size(global.my_hand); //90 pix from the left side of screen; 44 pixels apart
+						topcard.target_y = 280;
 						
 						//flip my hand cards up
 						//ADD TIMER HERE SO IT DOESN'T FACE UP RIGHT AWAY
-						topcard.face_up = true;
+						//timer counts down
+						//if(faceup_timer > 0){
+						//	show_debug_message("counting down" + string(faceup_timer));
+						//	faceup_timer -= 1;
+						//} else if(faceup_timer = 0){
+							topcard.face_up = true;
+						//}
 					}
 				}
 				
@@ -83,8 +89,8 @@ switch(global.state){
 			//global.their_hand[| random_index];
 			opponent_chosen_index = random_index;
 			//moving chosen card to center to play
-			chosen_card.target_x = 200;
-			chosen_card.target_y = 150;
+			chosen_card.target_x = 260;
+			chosen_card.target_y = 115;
 			
 			before_they_select_timer = 20;
 			global.state = global.state_my_select;
@@ -92,6 +98,7 @@ switch(global.state){
 	
 		break;
 	case global.state_my_select:
+	//CANT SELECT BEFORE THE OPPONENT SELECTS
 		//see if the player clicked the mouse button
 		if (mouse_check_button_pressed(mb_left)){
 			//see if the mouse is on top of a card
@@ -103,8 +110,8 @@ switch(global.state){
 					//reference to the index i chose
 					my_chosen_index = in_hand;
 					//we clicked a card and it's in my_hand
-					card_clicked.target_x = 200;
-					card_clicked.target_y = 220;
+					card_clicked.target_x = 260;
+					card_clicked.target_y = 195;;
 					
 					global.state = global.state_wait_for_evaluate;
 					wait_timer = 40;
@@ -136,47 +143,43 @@ switch(global.state){
 		if(their_card.card_type == global.rock){			
 			//if i chose paper
 				if(my_card.card_type == global.paper){
-					//sound
+					audio_play_sound(snd_win, 1, 0);
 					global.my_score += 1;
 				}
 			
 			//if i chose scissors
 				if(my_card.card_type == global.scissor){
-					//sound
+					audio_play_sound(snd_lose, 1, 0);
 					global.their_score += 1;
 				}
 		}
 		//if other player paper
 		if(their_card.card_type == global.paper){
-		
-		
 			//if i chose rock
 			if(my_card.card_type == global.rock){
-				//sound
+				audio_play_sound(snd_lose, 1, 0);
 				global.their_score += 1;
 				}
 		
 
 			//if i chose scissors
 			if(my_card.card_type == global.scissor){
-				//sound
+				audio_play_sound(snd_win, 1, 0);
 				global.my_score += 1;
 			}
 		
 		}
 		//if other player scissor
 		if(their_card.card_type == global.scissor){
-		
-		
 			//if i chose rock
 			if(my_card.card_type == global.rock){
-				//sound
+				audio_play_sound(snd_win, 1, 0);
 				global.my_score += 1;
 				}
 			
 			//if i chose paper
 			if(my_card.card_type == global.paper){
-				//sound
+				audio_play_sound(snd_lose, 1, 0);
 				global.their_score += 1;
 			}
 		}
@@ -207,8 +210,7 @@ switch(global.state){
 				
 						//move the sprite to the table
 						their_card.target_x = 510;
-						their_card.target_y = 150 - 2*ds_list_size(global.discard_pile);;
-						their_card.face_up = false;
+						their_card.target_y = 150 - 4*ds_list_size(global.discard_pile);;
 						their_card.depth = -1000-ds_list_size(global.discard_pile);
 					
 				} else if(ds_list_size(global.my_hand) == 3){ //if my hand has 3 cards then remove my chosen card from my_hand list to discard list
@@ -222,8 +224,7 @@ switch(global.state){
 				
 					//move the sprite to the table
 					my_card.target_x = 510;
-					my_card.target_y = 150 - 2*ds_list_size(global.discard_pile);;
-					my_card.face_up = false;
+					my_card.target_y = 150 - 4*ds_list_size(global.discard_pile);;
 					my_card.depth = -1000-ds_list_size(global.discard_pile);
 					
 				} else if(ds_list_size(global.their_hand) > 0){ //move the rest of the opponent's cards to discard pile
@@ -238,11 +239,10 @@ switch(global.state){
 				
 					//move the sprite to the table
 					their_card.target_x = 510;
-					their_card.target_y = 150 - 2*ds_list_size(global.discard_pile);;
-					their_card.face_up = false;
+					their_card.target_y = 150 - 4*ds_list_size(global.discard_pile);;
 					their_card.depth = -1000-ds_list_size(global.discard_pile);
+					their_card.face_up = true;
 				} else if(ds_list_size(global.my_hand) > 0){ //move the rest of the my cards to discard pile
-					show_debug_message("moving my card");
 					var my_card = ds_list_find_value(global.my_hand, 0);
 					//this won't delete the card object from the game
 					//it just deletes it from the deck
@@ -254,10 +254,10 @@ switch(global.state){
 				
 					//move the sprite to the table
 					my_card.target_x = 510;
-					my_card.target_y = 150 - 2*ds_list_size(global.discard_pile);
+					my_card.target_y = 150 - 4*ds_list_size(global.discard_pile);
 					my_card.depth = -1000-ds_list_size(global.discard_pile);
-					my_card.face_up = false;
 				} else {
+					//ADD TIMER HERE
 					if(ds_list_size(global.deck) > 0){
 						global.state = global.state_deal_cards;
 					} else {

@@ -26,7 +26,7 @@ global.state_reshuffle = 5;
 global.state = global.state_deal_cards;
 
 //timer variables
-faceup_timer = 0;
+faceup_timer = 10;
 card_timer = 0;
 before_they_select_timer = 20;
 wait_timer = 0;
@@ -51,7 +51,7 @@ for (i=0; i< global.num_cards; i++){
 	//set its properties
 	newcard.face_up = false;
 	newcard.target_x = 40;
-	newcard.target_y = 150 - 4*i;
+	newcard.target_y = 240 - 2*i;
 	newcard.depth = -1000 - i;
 	if (rock_counter < global.num_cards/3) {
 		newcard.card_type = global.rock;	
