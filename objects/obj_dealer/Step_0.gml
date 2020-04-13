@@ -24,6 +24,8 @@ switch(global.state){
 			//ONLY DEAL OUT 3 CARDS NOT ALL 24!
 				if(ds_list_size(global.their_hand) < 3){
 					if (ds_list_size(global.deck) > 0) {
+						audio_play_sound(snd_deal_cards, 1, 0);
+						
 						//deal a card from the top of the deck
 						//which is the last card in the deck list
 						var last_index = ds_list_size(global.deck) -1;
@@ -42,7 +44,8 @@ switch(global.state){
 					}
 				} else if(ds_list_size(global.my_hand) < 3){
 					if (ds_list_size(global.deck) > 0) {
-						show_debug_message(ds_list_size(global.my_hand));
+						audio_play_sound(snd_deal_cards, 1, 0);
+						
 						//deal a card from the top of the deck
 						//which is the last card in the deck list
 						var last_index = ds_list_size(global.deck) -1;
@@ -82,6 +85,7 @@ switch(global.state){
 		if(before_they_select_timer > 0){
 			before_they_select_timer -= 1;
 		} else if(before_they_select_timer = 0){
+			audio_play_sound(snd_deal_cards, 1, 0);
 			//the opponent randomly chooses their card
 			var random_index = choose(0, 1, 2);
 			//get the item that's actually at that index
@@ -131,6 +135,7 @@ switch(global.state){
 		} // else here???
 		if (mouse_check_button_pressed(mb_left)){
 				//see if the mouse is on top of a card
+				audio_play_sound(snd_deal_cards, 1, 0);
 				var card_clicked = instance_position(mouse_x, mouse_y, obj_card);
 				//if the mouse is colliding with a card
 				if (card_clicked != noone){
@@ -275,6 +280,7 @@ switch(global.state){
 						ds_list_add(global.discard_pile, their_card);
 				
 						//move the sprite to the table
+						audio_play_sound(snd_deal_cards, 1, 0);
 						their_card.target_x = 510;
 						their_card.target_y = 150 - 4*ds_list_size(global.discard_pile);;
 						their_card.depth = -1000-ds_list_size(global.discard_pile);
@@ -289,6 +295,7 @@ switch(global.state){
 					ds_list_add(global.discard_pile, my_card);
 				
 					//move the sprite to the table
+					audio_play_sound(snd_deal_cards, 1, 0);
 					my_card.target_x = 510;
 					my_card.target_y = 150 - 4*ds_list_size(global.discard_pile);;
 					my_card.depth = -1000-ds_list_size(global.discard_pile);
@@ -304,6 +311,7 @@ switch(global.state){
 					ds_list_add(global.discard_pile, their_card);
 				
 					//move the sprite to the table
+					audio_play_sound(snd_deal_cards, 1, 0);
 					their_card.target_x = 510;
 					their_card.target_y = 150 - 4*ds_list_size(global.discard_pile);;
 					their_card.depth = -1000-ds_list_size(global.discard_pile);
@@ -319,6 +327,7 @@ switch(global.state){
 					ds_list_add(global.discard_pile, my_card);
 				
 					//move the sprite to the table
+					audio_play_sound(snd_deal_cards, 1, 0);
 					my_card.target_x = 510;
 					my_card.target_y = 150 - 4*ds_list_size(global.discard_pile);
 					my_card.depth = -1000-ds_list_size(global.discard_pile);
@@ -353,8 +362,10 @@ switch(global.state){
 			
 			
 			//moving sprite to deck location
+			
 			discarded_card.target_x = 40;
 			discarded_card.target_y = 150;
+			
 		}
 		
 		

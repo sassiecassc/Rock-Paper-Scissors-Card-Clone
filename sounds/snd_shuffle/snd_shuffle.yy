@@ -1,8 +1,8 @@
 {
-    "id": "fff74d42-a2e7-4872-9067-93bb83cedcfa",
+    "id": "80fdb8ef-f43a-4a82-b464-60caddfa4b55",
     "modelName": "GMSound",
     "mvc": "1.0",
-    "name": "snd_lose",
+    "name": "snd_shuffle",
     "audioGroupGuid": "7b2c4976-1e09-44e5-8256-c527145e03bb",
     "bitDepth": 1,
     "bitRate": 128,
@@ -10,5 +10,5 @@
     "preload": false,
     "sampleRate": 44100,
     "type": 0,
-    "volume": 0.8
+    "volume": 1
 }
